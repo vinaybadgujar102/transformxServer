@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     password: {
       type: String,
     },
-    purchasedCourses: [{
+    habits: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Habit"
     }],

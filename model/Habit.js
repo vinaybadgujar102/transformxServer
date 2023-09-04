@@ -9,10 +9,10 @@ const habitSchema = new mongoose.Schema({
       type: String,
     },
     time: {
-      type: Date,
+      type: String,
     },
     metric: {
-      type: Number,
+      type: String,
     },
     ritual: {
       type: String,

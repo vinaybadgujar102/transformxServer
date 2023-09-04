@@ -15,4 +15,9 @@ mongoose.connect('mongodb+srv://vinaybadgujar102:Badgujar%40102@cluster0.ip6ahsy
   dbName: "TransformX2"
 });
 
+mongoose.connection.once('open', () => {
+  console.log('MongoDB connected successfully');
+});
+
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
