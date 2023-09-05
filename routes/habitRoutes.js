@@ -6,15 +6,15 @@ import { createHabit, getAllHabits, getHabitById, deleteHabit } from '../control
 const router = express.Router();
 
 // Get all habits for the authenticated user
-router.get('/habits', checkAuth, getAllHabits);
+router.get('/', checkAuth, getAllHabits);
 // Get a habit by its ID for the authenticated user
-router.get('/habits/:habitId', checkAuth, getHabitById);
+router.get('/:habitId', checkAuth, getHabitById);
 // // Create a new habit for the authenticated user
-router.post('/habits', checkAuth, createHabit);
+router.post('/', checkAuth, createHabit);
 // // Edit a habit by its ID for the authenticated user
 // router.put('/habits/:habitId', checkAuth, editHabit);
 // Delete a habit by ID for the authenticated user
-router.delete('/habits/:habitId', checkAuth, deleteHabit);
+router.delete('/:habitId', checkAuth, deleteHabit);
 
 
 
