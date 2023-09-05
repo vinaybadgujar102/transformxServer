@@ -1,15 +1,19 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import allRoutes from "./routes/index.js"
+import dotenv from "dotenv";
+
+dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const {MONGO_URI} = process.env
 
 app.use(express.json());
 
 app.use('/', allRoutes)
 
-mongoose.connect('mongodb+srv://vinaybadgujar102:Badgujar%40102@cluster0.ip6ahsy.mongodb.net/', {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName: "TransformX2"
