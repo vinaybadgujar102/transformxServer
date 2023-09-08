@@ -8,6 +8,7 @@ dotenv.config()
 const app = express();
 const PORT = process.env.PORT || 3000;
 const {MONGO_URI} = process.env
+export const SECRET = process.env.JWT_SECRET;
 
 app.use(express.json());
 

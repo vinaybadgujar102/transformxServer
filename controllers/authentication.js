@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User from '../model/User.js'; 
-
-const SECRET = Process.env.JWT_SECRET; 
+import { SECRET } from '../index.js';
 
 export const signup = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password, username } = req.body;
 
   try {
-    const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(403).json({ message: 'User already exists' });
@@ -17,10 +16,10 @@ export const signup = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const newUser = new User({ username, password: hashedPassword });
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 
-    const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ email }, SECRET, { expiresIn: '1h' });
     res.json({ message: 'User created successfully', token });
   } catch (error) {
     console.error(error);
@@ -29,22 +28,23 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { username, password } = req.headers;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(403).json({ message: 'Invalid username or password' });
+      console.log("User not found")
+      return res.status(403).json({ message: 'Invalid email or password' });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(403).json({ message: 'Invalid username or password' });
+      return res.status(403).json({ message: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ email, role: 'user' }, SECRET, { expiresIn: '1h' });
     res.json({ message: 'Logged in successfully', token });
   } catch (error) {
     console.error(error);
