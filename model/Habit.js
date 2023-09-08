@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import statsSchema from './Stats.js';
 
 const habitSchema = new mongoose.Schema({
   title: {
@@ -21,7 +22,7 @@ const habitSchema = new mongoose.Schema({
   },
   isAM: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   is24hour: {
     type: Boolean,
@@ -33,12 +34,11 @@ const habitSchema = new mongoose.Schema({
   ritual: String,
   shortReward: String,
   longReward: String,
-  streak: Number,
-  weeklyRecord: Number,
-  monthlyRecord: Number,
-  yearlyRecord: Number,
-  allTimeRecord: Number,
   icon: String,
+  stats: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Stats'
+  },
 });
 
 export default mongoose.model('Habit', habitSchema);
