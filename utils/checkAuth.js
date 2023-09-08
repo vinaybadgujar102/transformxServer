@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import User from '../model/User.js'; // Update the import path to your actual file structure
 
-const SECRET = 'your-secret-key'; // Replace with your actual secret key
+
+const SECRET = Process.env.JWT_SECRET; // Replace with your actual secret key
 
 export const checkAuth = (req, res, next) => {
   const authHeader = req.headers.authorization;
