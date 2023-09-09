@@ -90,41 +90,71 @@ export const createHabit = async (req, res) => {
   }
 };
 
-// export const editHabit = async (req, res) => {
-//     const { habitId } = req.params;
-//     const { title, location, time, metric, ritual, shortReward, longReward } = req.body;
+export const editHabit = async (req, res) => {
+  const { habitId } = req.params;
+  const { title, location, hour, mins, isAM, is24hour, metricTitle, metricMin, metricIdeal, ritual, shortReward, longReward, icon } = req.body;
 
-//     try {
-//       // Find the habit by its ID
-//       const habit = await Habit.findById(habitId);
+  try {
+    const habit = await Habit.findById(habitId);
 
-//       if (!habit) {
-//         return res.status(404).json({ message: 'Habit not found' });
-//       }
+    if (!habit) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
 
-//       // Check if the authenticated user owns the habit
-//       if (habit.user.toString() !== req.user._id.toString()) {
-//         return res.status(403).json({ message: 'You do not have permission to edit this habit' });
-//       }
+    if (habit.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'You do not have permission to edit this habit' });
+    }
 
-//       // Update the habit properties
-//       habit.title = title;
-//       habit.location = location;
-//       habit.time = time;
-//       habit.metric = metric;
-//       habit.ritual = ritual;
-//       habit.shortReward = shortReward;
-//       habit.longReward = longReward;
+    // Update only the specified fields if they exist in the request body
+    if (title) {
+      habit.title = title;
+    }
+    if (location) {
+      habit.location = location;
+    }
+    if (hour !== undefined) {
+      habit.hour = hour;
+    }
+    if (mins !== undefined) {
+      habit.mins = mins;
+    }
+    if (isAM !== undefined) {
+      habit.isAM = isAM;
+    }
+    if (is24hour !== undefined) {
+      habit.is24hour = is24hour;
+    }
+    if (metricTitle) {
+      habit.metricTitle = metricTitle;
+    }
+    if (metricMin !== undefined) {
+      habit.metricMin = metricMin;
+    }
+    if (metricIdeal !== undefined) {
+      habit.metricIdeal = metricIdeal;
+    }
+    if (ritual) {
+      habit.ritual = ritual;
+    }
+    if (shortReward) {
+      habit.shortReward = shortReward;
+    }
+    if (longReward) {
+      habit.longReward = longReward;
+    }
+    if (icon) {
+      habit.icon = icon;
+    }
 
-//       // Save the updated habit
-//       await habit.save();
+    // Save the updated habit
+    await habit.save();
 
-//       res.json({ message: 'Habit edited successfully', habit });
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ message: 'Internal server error' });
-//     }
-//   };
+    res.json({ message: 'Habit edited successfully', habit });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
 export const deleteHabit = async (req, res) => {
   const { habitId } = req.params;

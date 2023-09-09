@@ -1,7 +1,7 @@
 import express from 'express';
 import { checkAuth } from '../utils/checkAuth.js';
 
-import { createHabit, getAllHabits, getHabitById, deleteHabit } from '../controllers/habit.js';
+import { createHabit, getAllHabits, getHabitById, deleteHabit, editHabit } from '../controllers/habit.js';
 
 const router = express.Router();
 
@@ -11,8 +11,8 @@ router.get('/', checkAuth, getAllHabits);
 router.get('/:habitId', checkAuth, getHabitById);
 // // Create a new habit for the authenticated user
 router.post('/', checkAuth, createHabit);
-// // Edit a habit by its ID for the authenticated user
-// router.put('/habits/:habitId', checkAuth, editHabit);
+// Edit a habit by its ID for the authenticated user
+router.put('/habits/:habitId', checkAuth, editHabit);
 // Delete a habit by ID for the authenticated user
 router.delete('/:habitId', checkAuth, deleteHabit);
 
